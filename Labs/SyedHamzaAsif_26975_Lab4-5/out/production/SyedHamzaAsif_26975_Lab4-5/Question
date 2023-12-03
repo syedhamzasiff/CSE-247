@@ -1,0 +1,49 @@
+Objective
+The objective of this lab is to understand List ADT using Linked list implementation.
+
+Task
+Create a linked list and implement methods to insert item at the end of the list and display all items in the list.
+Use constructor as needed.
+
+Procedure
+
+• The implementation of Linked List uses a pair of classes.
+    One describes the node and second represents the collection of nodes as a list structure.
+    Implement following list of methods for the linked list class.
+    Once you successfully implemented the above task, convert it to generic implementation.
+
+• Convert your linked list into generic class to make it work for any type of data.
+    class Node {
+    int data;
+    Node next;
+
+    Node(int d){
+    data=d; next = null;
+    }
+}
+class Linkedlist {
+    Node head;
+
+    Linkedlist(){
+    head = null;
+    }
+
+    public void insert(int d){
+    / / code
+    }
+    // insert new node at the end of list.
+
+    public Boolean find(int d){ // code }
+    // find a node with value d
+
+    public void clear(){ // code }
+    // make list empty
+
+    public void delete(int d){ // code}
+    // delete a node with value d (first occurrence)
+
+    public String toString(){ // code }
+    // returns a string with comma node values.
+
+    public void insertBefore(Node n, int d){ / / code }
+}
