@@ -41,6 +41,19 @@ public class MaxHeap<T extends Comparable<T>> {
         }
     }
 
+    // replace the root with the last leaf and call sift down.
+    public T extractMax() {
+        if (size == 0) {
+            throw new IllegalStateException("heap is empty");
+        }
+        T max = heap[0];
+        heap[0] = heap[size - 1];
+        heap[size - 1] = null;
+        size--;
+        siftDown(0);
+        return max;
+    }
+
     // swap smaller node with its larger child until the heap property is satisfied.
     public void siftDown(int index) {
         int maxChild;
@@ -65,16 +78,43 @@ public class MaxHeap<T extends Comparable<T>> {
         }
     }
 
-    // replace the root with the last leaf and call sift down.
-    public T extractMax() {
-        if (size == 0) {
-            throw new IllegalStateException("heap is empty");
+
+    //change the value of the element to a very high number (say, positive infinity), then call sift up, and then call extractMax.
+    public void remove(T value) {
+        int index = find(value);
+        if (index == -1) {
+            throw new IllegalArgumentException("Element not found");
         }
-        T max = heap[0];
-        heap[0] = heap[size - 1];
+
+        heap[index] = heap[size - 1];
+        heap[size - 1] = null;
         size--;
-        siftDown(0);
-        return max;
+
+        if (index < size) {
+            siftUp(index);
+            siftDown(index);
+        }
+    }
+
+    // change the priority and if the priority is increased then call sift up,
+    // otherwise, if the priority is decreased then call sift down.
+    public void changePriority(T oldValue, T newValue) {
+        int index = find(oldValue);
+
+        if (index == -1) {
+            throw new IllegalArgumentException("Element not found");
+        }
+
+        if (!oldValue.equals(newValue)) {
+            heap[index] = newValue;
+
+            if (newValue.compareTo(oldValue) > 0) {
+                siftUp(index);
+            }
+            else if (newValue.compareTo(oldValue) < 0) {
+                siftDown(index);
+            }
+        }
     }
 
     public int find(T d) {
@@ -84,30 +124,6 @@ public class MaxHeap<T extends Comparable<T>> {
             }
         }
         return -1;
-    }
-
-    //change the value of the element to a very high number (say, positive infinity), then call sift up, and then call extractMax.
-    public void remove(T value) {
-        int index = find(value);
-        if (index == -1) {
-            throw new IllegalArgumentException("not found");
-        }
-        heap[index] = heap[size - 1];
-        size--;
-        siftUp(index);
-        siftDown(index);
-    }
-
-    // change the priority and if the priority is increased then call sift up,
-    // otherwise, if the priority is decreased then call sift down.
-    public void changePriority(T d, T v) {
-        int index = find(d);
-        if (index == -1) {
-            throw new IllegalArgumentException("not found");
-        }
-        heap[index] = v;
-        siftUp(index);
-        siftDown(index);
     }
 
     @Override
